@@ -1,6 +1,8 @@
 # 다중 RBM을 활용한 도서 추천 시스템
 ### &#128193; [GitHub Repository](https://github.com/leee5495/Distributed_Heterogeneous_RBM)
 ### &#128196; [Paper - Presented at CICS 2019](https://leee5495.github.io/pdf/CICS_lej.pdf)
+<button onclick="location.href='https://github.com/leee5495/Distributed_Heterogeneous_RBM'" type="button">&#128193; GitHub Repository</button>
+<button onclick="location.href='https://leee5495.github.io/pdf/CICS_lej.pdf'" type="button">&#128196; Paper - Presented at CICS 2019</button>
 <br>
 
 ### 연구 동기

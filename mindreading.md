@@ -1,5 +1,5 @@
 # Mindreading
-<button onclick="location.href='https://github.com/leee5495/Mindreading'" type="button">### &#128193; GitHub Repository</button>
+<button onclick="location.href='https://github.com/leee5495/Mindreading'" type="button">&#128193; GitHub Repository</button>
 <br><br>
 
 장르별 도서 평점 입력 페이지

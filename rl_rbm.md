@@ -1,6 +1,6 @@
 # 강화학습을 접목한 협업 필터링 모델
-### &#128193; [GitHub Repository](https://github.com/leee5495/RL_RBM)
-<br>
+<button onclick="location.href='https://github.com/leee5495/RL_RBM'" type="button">&#128193; GitHub Repository</button>
+<br><br>
 
 ### 연구 동기
 ---

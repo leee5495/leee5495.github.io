@@ -46,14 +46,14 @@
         color: black;
       }
       .wrapper {
-        width: 1090px;
+        width: auto;
       }
       
       .sidebar {
         text-align: center;
         padding: 2rem 1rem;
         color: rgba(255,255,255,.5);
-        background-color: #202020;
+        background-color: white;
       }
       @media (min-width: 48em) {
         .sidebar {
@@ -66,9 +66,24 @@
         }
       }
       
-      section {
-        width: auto;
-        float: left;
+      .content {
+        padding-top:    4rem;
+        padding-bottom: 4rem;
+      }
+
+      @media (min-width: 48em) {
+        .content {
+          max-width: 38rem;
+          margin-left: 20rem;
+          margin-right: 2rem;
+        }
+      }
+
+      @media (min-width: 64em) {
+        .content {
+          margin-left: 22rem;
+          margin-right: 4rem;
+        }
       }
     </style>
   </head>
@@ -99,7 +114,7 @@
         </ul>
         {% endif %}
       </header>
-      <section>
+      <section class="content">
 
       {{ content }}
 

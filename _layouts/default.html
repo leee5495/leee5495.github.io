@@ -45,13 +45,14 @@
         text-decoration: underline;
         color: black;
       }
-      header {
+      .header {
         background-color: #f2f2f2;
       }
     </style>
   </head>
   <body>
     <div class="wrapper">
+      <div class="header">
       <header>
         <h1 class="site_title"><a href="{{ "/" | absolute_url }}" class="site_title">{{ site.title | default: site.github.repository_name }}</a></h1>
         
@@ -78,6 +79,7 @@
         {% endif %}
       </header>
       <section>
+      </div>
 
       {{ content }}
 

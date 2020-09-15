@@ -48,6 +48,24 @@
       .wrapper {
         width: 1090px;
       }
+      
+      .sidebar {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: rgba(255,255,255,.5);
+        background-color: #202020;
+      }
+      @media (min-width: 48em) {
+        .sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 18rem;
+          text-align: left;
+        }
+      }
+      
       section {
         width: auto;
         float: left;
@@ -56,7 +74,7 @@
   </head>
   <body>
     <div class="wrapper">
-      <header>
+      <header class="sidebar">
         <h1 class="site_title"><a href="{{ "/" | absolute_url }}" class="site_title">{{ site.title | default: site.github.repository_name }}</a></h1>
         
         {% if site.logo %}

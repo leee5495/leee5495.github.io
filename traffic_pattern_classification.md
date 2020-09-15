@@ -1,8 +1,7 @@
 # 손실데이터를 포함한 교통량 데이터 분석
-### &#128193; [GitHub Repository](https://github.com/leee5495/DWLab_2020)
-### &#128196; [Paper - Presented at KDBC 2019](https://leee5495.github.io/pdf/KDBC_lej.pdf)
-### &#128196; [Paper - Published ...]()
-<br>
+<button onclick="location.href='https://github.com/leee5495/DWLab_2020'" type="button">&#128193; GitHub Repository</button>
+<button onclick="location.href='https://leee5495.github.io/pdf/KDBC_lej.pdf'" type="button">&#128196; Paper - Presented at KDBC 2019</button>
+<br><br>
 
 
 ### 연구 동기

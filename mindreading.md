@@ -30,3 +30,5 @@
 <br>
 
 <img src="images/my_page.gif?raw=true"/>
+  
+<br><br>

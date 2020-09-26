@@ -43,6 +43,24 @@
 
 <br><br>
 
+### Distributed RBM의 출력 통합 방법의 비교
+---
+![image](https://user-images.githubusercontent.com/39192405/94337317-84193800-0024-11eb-906c-543bdb534364.png)
+- `M-Selection`: 입력 사용자가 속한 클러스터에 대한 RBM의 출력만을 사용
+- `M-Weighted`: 입력 사용자에 대한 은닉벡터와 K-means centroid와의 거리를 가중치로 사용해 각 RBM에 대한 가중 평균을 사용
+- `M-Ensemble`: MLP를 사용해 RBM의 은닉벡터들을 모아 각 아이템에 대한 점수를 예측하는 앙상블 네트워크를 만들어 사용
+
+   &nbsp; | M-Selection | M-Weighted | M-Ensemble 
+  -- | -- | -- | -- 
+  HR@10 | 0.05947 | 0.06278 | 0.07489 
+  HR@25 | 0.1200 | 0.1167 | 0.1233 
+  ARHR | 0.003786 | 0.003541 | 0.004342 
+  Time(sec) | 1.0300 | 1.0040 | 0.5230
+
+  **실험 결과 M-Ensemble 방식이 다른 두 개의 방법보다 더 높은 성능을 보이는 것을 확인할 수 있었다**
+  
+<br><br>
+
 ### Baseline 추천 시스템과의 성능 비교
 ---
 ![image](https://user-images.githubusercontent.com/39192405/93019262-d1eb7480-f610-11ea-8473-92b9616b0ee5.png)

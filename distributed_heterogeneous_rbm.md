@@ -1,54 +1,54 @@
-# 다중 RBM을 활용한 도서 추천 시스템
+# Distributed Heterogeneous Restricted Boltzmann Machines for Book Recommendation
 <button onclick="location.href='https://github.com/leee5495/Distributed_Heterogeneous_RBM'" type="button">&#128193; GitHub Repository</button>
 <button onclick="location.href='https://leee5495.github.io/pdf/CICS_lej.pdf'" type="button">&#128196; Paper - Presented at CICS 2019</button>
 <br><br>
 
-### 연구 동기
+### Research Motivation
 ---
-- 오늘날 전 세계에서 이용 가능한 **컨텐츠는 매우 방대**하며, 콘텐츠를 소비하는 **사용자의 수 또한 폭발적으로 증가**함
-- 사용자가 자신이 원하는 컨텐츠를 찾기 위해서는 **많은 시간과 노력**이 필요
-- 추천 시스템은 이러한 문제점을 극복하고 **실용적인 검색 서비스를 제공하는 데 도움**을 줄 수 있음
+- Today, the **number of contents** available around the world and the **number of users is exploding**
+- It takes a lot of **time and effort** for users to find the content they want
+- Recommendation systems can help users overcome these challenges and **provide practical search services**
 
-  **협업 필터링에 사용되는 기본 모델인 RBM(Restricted Boltzmann Machine)을 다중으로 이용하여 기존의 추천 시스템보다 높은 성능을 보이는 새로운 RBM 모델을 개발하고자 함**
+  **By utilizing multiple RBMs(Restricted Boltzmann Machines) together, we wished to build a more robust recommendation system that can account to various user traits**
   
 <br><br>
 
-### 제안 모델
+### Suggested Model
 ---
-도서추천을 위한 분산 Heterogeneous Restricted Boltzmann Machine
+Distributed Heterogeneous Restricted Boltzmann Machines for Book Recommendation
 <br>
 
 <img src="images/dhrbm.png?raw=true"/>
 <br>
 
-1. RBM에 M x N 크기의 데이터를 학습 (M : 사용자 수, N : 아이템 수)
-2. RBM의 은닉벡터를 통해 각 사용자에 대한 낮은 차원의 표현을 얻음
-3. ②의 은닉벡터를 이용해 사용자를 군집화(K-means) 하여 3개의 그룹으로 나눔
-4. 각 그룹을 미리 학습된 RBM에 추가로 학습시켜 각 그룹에 특화된 3개의 RBM 모델 (Heterogeneous RBM)을 얻음
+1. Train M x N size data with RBM (M: Number of Users, N: Number of Items)
+2. Obtain latent feature of each user from RBM's hidden vector
+3. Using the latent features from ②, cluster users to 3 groups with K-means clustering algorithm
+4. Additionally train the pretrained RBM with the data of each group → obtain 3 heterogeneous RBMs specialized to each group
 
 
-   **사용자를 3개의 그룹으로 군집화하고, 각 그룹 데이터를 추가적으로 학습한 3개의 RBM을 사용해 MLP로 묶어 사용자에게 특화된 추천을 한다**
+   **Using the 3 heterogeneous RBMs, ensemble the outputs to provide more personalized recommendation to users**
    
 <br><br>
 
-### 실험 데이터 설명
+### Experimentation Data
 ---
-- 인터넷 서점(알라딘)에서 크롤링한 사용자 리뷰 데이터 사용
-- 12,000여 권의 도서에 대한 리뷰를 크롤링한 후 2개 미만의 리뷰를 가지는 사용자와 도서 필터링
-- 최종적으로 총 6,000여 개의 도서와 4,500여 명의 사용자에 대한 리뷰 데이터 사용
+- Used web-crawled review data from an online bookstore(Aladdin)
+- Crawled reviews of 12,000 books and filtered out users and books with less than 2 reviews
+- Finally, used a total of 6,000 books and 4,500 users' review data
 
-  사용자 수 | 아이템 수 | Rating 수 | 평가   밀도(density)
+  Users | Items | Ratings | Rating density
   -- | -- | -- | --
   4,542 | 5,992 | 55,019 | 0.20%
 
 <br><br>
 
-### Distributed RBM의 출력 통합 방법의 비교
+### Comparison of Different Ensemble Methods of Heterogeneous RBM outputs
 ---
 ![image](https://user-images.githubusercontent.com/39192405/94337317-84193800-0024-11eb-906c-543bdb534364.png)
-- `M-Selection`: 입력 사용자가 속한 클러스터에 대한 RBM의 출력만을 사용
-- `M-Weighted`: 입력 사용자에 대한 은닉벡터와 K-means centroid와의 거리를 가중치로 사용해 각 RBM에 대한 가중 평균을 사용
-- `M-Ensemble`: MLP를 사용해 RBM의 은닉벡터들을 모아 각 아이템에 대한 점수를 예측하는 앙상블 네트워크를 만들어 사용
+- `M-Selection`: Use only the output of the RBM trained on the cluster to which the input user belongs
+- `M-Weighted`: Use the weighted average of each RBM output with the distance between the hidden vector of the input user and the K-means centroids.
+- `M-Ensemble`: Using MLP, gather RBM's hidden vectors to create an ensemble network that predicts scores for each item
 
    &nbsp; | M-Selection | M-Weighted | M-Ensemble 
   -- | -- | -- | -- 
@@ -57,18 +57,18 @@
   ARHR | 0.003786 | 0.003541 | 0.004342 
   Time(sec) | 1.0300 | 1.0040 | 0.5230
 
-  **실험 결과 M-Ensemble 방식이 다른 두 개의 방법보다 더 높은 성능을 보이는 것을 확인할 수 있었다**
+  **The experiment result shows that the M-Ensemble method performs better than the other two methods.**
   
 <br><br>
 
-### Baseline 추천 시스템과의 성능 비교
+### Comparison to Baseline Recommendation Methods
 ---
 ![image](https://user-images.githubusercontent.com/39192405/93019262-d1eb7480-f610-11ea-8473-92b9616b0ee5.png)
-- `M-Ensemble`: 제안 모델
-- `Itempop`: 제일 인기가 많은 아이템 추천
-- `Itempop-Cluster`: 사용자 군집에서 제일 인기가 많은 아이템 추천
-- `SVD`: 특이값 분해 Matrix Factorization을 이용한 협업 필터링
-- `NMF`: NMF Matrix Factorization을 이용한 협업 필터링
+- `M-Ensemble`: Proposed model
+- `Itempop`: Recommend the most popular items
+- `Itempop-Cluster`: Recommend the most popular items from the cluster the input user belongs to
+- `SVD`: Collaborative Filtering method using SVD Matrix Factorization
+- `NMF`: Collaborative Filtering method using NMF Matrix Factorization
 
     | M-Ensemble | ItemPop | ItemPop-Cluster | SVD | NMF
   -- | -- | -- | -- | -- | --
@@ -77,17 +77,17 @@
   ARHR | 0.004342 | 0.0007325 | 0.001186 | 0.003223 | 0.0008671
   Time(sec) | 0.6060 | 0.08100 | 0.8650 | 7.176 | 11.43
 
-  **실험 결과 상대적으로 적은 시간 안에 제안한 모델의 성능이 더 높은 것을 볼 수 있었다**
+  **The experiment result shows that the proposed model has a higher recommendation performance in a relatively small amount of time.**
   
 <br><br>
 
-### 단일 RBM과의 성능 비교
+### Comparison to Single RBM Model
 ---
 ![image](https://user-images.githubusercontent.com/39192405/93019413-d2d0d600-f611-11ea-91a8-cc54bbd56b00.png)
-- `M-Ensemble`: 제안 모델
-- `Control-256`: 은닉벡터의 크기가 256인 RBM
-- `Control-512`: 은닉벡터의 크기가 512인 RBM
-- `Control-1024`: 은닉벡터의 크기가 1024인 RBM
+- `M-Ensemble`: Proposed model
+- `Control-256`: RBM with latent dimension of 256
+- `Control-512`: RBM with latent dimension of 512
+- `Control-1024`: RBM with latent dimension of 1024
 
     | M-Ensemble | Control-256 | Control-512 | Control-1024
   -- | -- | -- | -- | --
@@ -96,19 +96,19 @@
   ARHR | 0.004342 | 0.003378 | 0.004011 | 0.004243
   Time(sec) | 0.6060 | 0.2290 | 0.3210 | 0.4900
 
-  **실험 결과 다중RBM의 성능이 단일RBM의 성능보다 높은 것을 관찰하였다**
+  **The experiment result shows that the performance of multiple RBMs is higher than that of a single RBM.**
   
 <br><br>
 
-### 결론 및 개선점
+### Conclusion
 ---
 
-&nbsp;`결론`
-- 협업 필터링 추천에 높은 성능을 보이는 RBM 모델을 다중 사용해 **분산된 구조를 설계하여 추천 시스템의 성능 개선**
-- 분산된 구조의 다중 RBM을 사용하기 때문에 분산 컴퓨팅을 사용해 학습과 출력의 시간을 줄일 수 있을 것이라 생각
+&nbsp;`Conclusion`
+- Improved the recommendation performance of RBM based Collaborative Filtering system by designing a distributed ensemble structure using multiple RBMs
+- The distributed structure can be used in a distributed computing environment to save training and prediction time
 
-&nbsp;`개선점`
-- 도서 추천이 아닌 **다른 도메인**에서의 추천 성능을 분석하면서 제안하는 시스템이 다른 도메인에도 적용이 될 수 있는지 확인
-- RBM 대신 Encoder-Decoder와 같은 **다른 추천 모델을 적용**하는 실험을 진행하면서 분산 구조가 다른 모델에도 적용이 되는지 확인
+&nbsp;`Future Work`
+- Analyzing recommendation performance in different domains other than book recommendations to see if the proposed system can be applied to other domains as well
+- Conduct experiments in which other recommended models such as an Autoencoder are applied instead of RBM to see if the distributed structure applies to other models as well
   
 <br><br>

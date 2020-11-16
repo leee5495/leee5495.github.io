@@ -1,77 +1,76 @@
-# 손실데이터를 포함한 교통량 데이터 분석
+# Pattern Classification Model of Traffic Data including Missing Values
 <button onclick="location.href='https://github.com/leee5495/DWLab_2020'" type="button">&#128193; GitHub Repository</button>
 <button onclick="location.href='https://leee5495.github.io/pdf/KDBC_lej.pdf'" type="button">&#128196; Paper - Presented at KDBC 2019</button>
 <br><br>
 
 
-### 연구 동기
+### Research Motivation
 ---
-시계열 센서 데이터의 문제점
-1. 통신, 센서 성능에 따른 **결측값**<br>
-   → 분석 전 알맞은 처리가 필요
+Problems with Time Series Sensor Data
+1. **Missing values** due to troubles in transmission and sensor defects<br>
+   → Needs proper processing before analysis
    
-2. 의미있는 데이터를 수집하기까지 **시간적 제한** 존재<br>
-   → 적은 양의 데이터를 가지고 의미있는 분석 필요
+2. **Requires time** until meaningful amount of data is collected<br>
+   → Needs to accurately analyze small amount of data
    
-3. 센서 설치의 물리적 어려움에 따른 **위치적 제한** 존재<br>
-   → 다른 변수의 영향이 있는 데이터에 대한 분석 필요
+3. **Physical restrictions** that put locational constraint of the sensors<br>
+   → Needs to analyze data that is affected by other variables
 
 <br><br>
 
 
-### 제안방법
+### Suggested Model
 ---
-손실 데이터를 포함한 교통량 데이터의 분석을 위한 어텐션 메커니즘 및 CNN 기반의 패턴 분류 모델
+Pattern Classification Model based on Attention Mechanism and CNN for Analysis of Traffic Data including Missing Values
 <br>
 
 <img src="images/traffic_pattern.png?raw=true"/>
 <br>
 
-1. **어텐션 메커니즘**<br>
-   입력의 원소에 가중치를 부여해 중요한 데이터를 더 고려하는 어텐션 메커니즘 추가<br>
-   결측값에 대한 메타 데이터를 입력으로 받아 결측값에 대한 가중치 고려
+1. **Attention Mechanism**<br>
+   Added an attention mechanism to focus on important entries in data<br>
+   Produces weights for each entries in data with an additional meta data input of whether each entry is missing
    
-2. **심층 CNN과 Feed Forward 구조**<br>
-   CNN과 Feed Forward 레이어를 여러층 이용해 경미한 차이에도 분류를 정확히 할 수 있게 한다
+2. **Deep model structure of CNN and Feed Forward layers**<br>
+   Used deep model structure of CNN and Feed Forward layers to accurately classify minor pattern differences
 
 <br><br>
 
-### 실험 데이터 설명
+### Experimentation Data
 ---
-- 다저스타디움과 거리가 가까운 101 North freeway에서 5분마다 교통량이 측정되어 하루 288개의 원소로 구성되어 있는 데이터 사용
-- 데이터가 측정된 날짜와 다저스타디움의 경기 일자를 비교해 다저스 경기 여부의 레이블을 지정하고 각 레이블을 분류하는 모델 설계
+- Used traffic data measured every 5 minutes on 101 North Freway, which is close to Dodger Stadium (consisting of 288 elements per day)
+- Designed a model that classifies whether the stadium held a game that day from the day's traffic data
 
 ![image](https://user-images.githubusercontent.com/39192405/93020209-c8fda180-f616-11ea-9221-4b1e169d5da5.png)
 
 <br><br>
 
-### 시계열 교통량 데이터를 이용해 야구 경기장에서 경기가 개최되었는지 분류
+### Classification Result of Traffic Loop Time Series Data
 ---
 ![traffic_classification_res1](https://user-images.githubusercontent.com/39192405/93121397-bd39da00-f6ff-11ea-9e7f-7a0e1278ce1a.png)
 
-- 분류 실험 결과, 제안한 **어텐션 메커니즘이 분류 정확도를 높이는** 것을 보였다
+- The result shows that the **proposed attention mechanism improves the classification accuracy**
 
 <br><br>
 
-### 추가연도의 데이터를 이용해 손실 데이터 유무에 따른 교통량 데이터 분류 성능 비교
+### Classification Result on Additional Traffic Data
 ---
 ![traffic_classification_res2](https://user-images.githubusercontent.com/39192405/93121396-bc08ad00-f6ff-11ea-9295-6ff1ea005008.png)
 
-- 결측값이 포함된 데이터의 경우 **어텐션 메커니즘이 적용되었을 때 정확도가 향상**되는 것을 확인할 수 있다. 
-- 결측값이 없는 경우에도 대부분 어텐션 메커니즘이 있는 경우의 성능이 더 높은 것을 볼 수 있다.
+- The result shows that the attention mechanism **improves classification accuracy of data with missing values**
+- The result also shows that the **attention mechanism can improve classification accuacy of data without missing values**
 
 <br><br>
 
-### 결론 및 개선점
+### Conclusion
 ---
 
-&nbsp;`결론`
-- 손실 데이터가 자주 일어날 수 있는 시계열 센서 데이터에 대해 손실 값에 대한 복잡한 전처리 과정 없이 패턴 분류의 성능을 높일 수 있는 **어텐션 메커니즘 제안**
-- 실험을 통해 무작위적인 손실 패턴을 지닌 교통량 데이터에 대해 **어텐션 구조의 패턴 분류 성능 개선 증명**
-- 다른 무작위적인 손실 패턴을 지닌 데이터에도 해당 방법이 적용될 수 있다고 추정
+&nbsp;`Conclustion`
+- **Proposed an attention mechanism** that can improve classification accuracy of time series sensor data with missing values without any complicated preprocessing procedure
+- Through various experiments proved that the **attention mechanism works to improve classification accurary with time series data with missing values**
 
-&nbsp;`개선점`
-- **다른 센서의 데이터와 정기적인 손실 패턴을 지닌 데이터**에 대해서도 어텐션 메커니즘이 적용되는지 확인
-- 어텐션 메커니즘에 단층 신경망 대신 다층 신경망을 사용할 때 결과 분석
+&nbsp;`Future Work`
+- **Experiment with other types of time series data** to see whether the mechanism can be applied to different sensor data
+- Experiement with multiple layers of Feed Forward layer for attention mechanism
   
 <br><br>
